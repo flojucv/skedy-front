@@ -1,0 +1,24 @@
+<form [formGroup]="formRole" (ngSubmit)="onSubmit()">
+    <h2>Ajouter un role</h2>
+    <mat-form-field>
+        <mat-label>Nom du rôle</mat-label>
+        <input matInput formControlName="label" required />
+        @if(formRole.get('name')?.invalid) {
+        <mat-error>Le nom est requis.</mat-error>
+        }
+    </mat-form-field>
+
+    <div class="permissions">
+        <label>Permissions</label>
+        <mat-button-toggle-group name="fontStyle" formControlName="permission" multiple>
+            <mat-button-toggle value="admin">Administrateur</mat-button-toggle>
+            <mat-button-toggle value="write">Écriture</mat-button-toggle>
+            <mat-button-toggle value="read">Lecture</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onClose()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formRole.invalid">Ajouter</button>
+    </div>
+</form>

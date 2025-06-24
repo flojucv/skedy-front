@@ -1,0 +1,57 @@
+<form [formGroup]="formAddUser" (ngSubmit)="onSubmit()">
+    <h2 mat-dialog-title>Ajouter un utilisateur</h2>
+    <mat-form-field>
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput formControlName="username" required />
+        @if(formAddUser.get('username')?.invalid) {
+        <mat-error>Le nom d'utilisateur est requis.</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" formControlName="password" required />
+        @if(formAddUser.get('password')?.invalid) {
+        <mat-error>Le mot de passe est requis.</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Rôle</mat-label>
+        <mat-select formControlName="role_id" required>
+            @for(role of roles; track $index) {
+            <mat-option [value]="role.id">{{ role.label }}</mat-option>
+            }
+        </mat-select>
+        @if(formAddUser.get('role_id')?.invalid) {
+        <mat-error>Le rôle est requis.</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Groupes</mat-label>
+        <mat-chip-grid #chipGrid>
+            @for(group of this.formAddUser.get('groups').value; track $index) {
+            <mat-chip-row (removed)="removeUserGroup(group)">
+                {{ group.label || 'Non défini' }}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            }
+        </mat-chip-grid>
+
+        <input placeholder="Recherche un group" #groupInput [matChipInputFor]="chipGrid" [matAutocomplete]="auto" />
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addUserGroup($event, groupInput)">
+            @for (group of chipsGroupsDisplay; track group) {
+            <mat-option [value]="group">{{group.label}}</mat-option>
+            }
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onNoClick()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formAddUser.invalid">Ajouter</button>
+    </div>
+</form>

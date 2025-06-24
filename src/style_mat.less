@@ -1,0 +1,93 @@
+@primary-color: #667eea;
+@secondary-color: #764ba2;
+@error-color: #ba1a1a;
+@error-black-color: #410002;
+
+:root {
+    --mdc-outlined-text-field-focus-label-text-color: @primary-color;
+    --mdc-outlined-text-field-focus-outline-color: @primary-color;
+    --mdc-tab-indicator-active-indicator-color: @secondary-color;
+    --mat-tab-header-active-hover-indicator-color: @secondary-color;
+    --mat-tab-header-active-focus-indicator-color: @secondary-color;
+    --mdc-text-button-label-text-color: @primary-color;
+    --mat-text-button-state-layer-color: @primary-color;
+    --mdc-protected-button-container-color: @primary-color;
+    --mdc-protected-button-label-text-color: white;
+    --fc-button-bg-color: @primary-color;
+    --fc-button-border-color: @primary-color;
+    --fc-button-active-bg-color: @secondary-color;
+    --fc-button-active-border-color: @secondary-color;
+    --fc-button-hover-bg-color: @secondary-color;
+    --fc-button-hover-border-color: @secondary-color;
+}
+
+.mat-accent.mat-mdc-fab {
+    --mat-fab-foreground-color: #FFFFFF;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-color: transparent !important;
+}
+
+.mat-accent.mat-mdc-fab.secondary {
+    background: transparent;
+    --mat-fab-foreground-color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.mdc-text-field--invalid mat-icon {
+    color: @error-color;
+}
+
+.mdc-text-field--invalid:hover mat-icon {
+    color: @error-black-color;
+}
+
+.mat-mdc-form-field-icon-suffix>.mat-icon {
+    cursor: pointer;
+}
+
+.mat-mdc-chip-remove:hover {
+    --mdc-chip-with-trailing-icon-trailing-icon-color: @error-color;
+}
+
+button.cancel:hover mat-icon {
+    color: @error-color;
+}
+
+mat-table, .mat-mdc-table {
+    border: 1px solid #636363 !important;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 35px;
+        color: @primary-color;
+        text-align: center;
+    }
+
+    mat-form-field {
+        margin-bottom: 10px;
+    }
+
+    button {
+        margin-right: 10px;
+    }
+}
+
+
+.mat-mdc-progress-spinner circle {
+  stroke-linecap: round;
+  /* Ajoute des bords arrondis */
+}
+
+.fc .fc-button-primary:focus, .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus, .fc .fc-button:focus {
+    box-shadow: rgba(102, 126, 234, 0.5) 0px 0px 0px 0.2rem;
+}
+
+input[type="time"].mdc-text-field__input::-webkit-calendar-picker-indicator {
+  display: block;
+}

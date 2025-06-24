@@ -1,0 +1,42 @@
+<div class="login-container">
+    <!-- Header -->
+    <div class="login-header">
+        <div class="logo">Skedy</div>
+        <p class="welcome-text">Connectez-vous à votre espace</p>
+    </div>
+
+    <!-- Error message -->
+    @if(error.status) {
+    <div class="error-message">
+        {{ error.messages.fr }}
+    </div>
+    }
+
+
+    <!-- Login Form -->
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Identifiant </mat-label>
+            <input matInput type="text" formControlName="username" />
+            <mat-icon matPrefix>mail</mat-icon>
+            @if(loginForm.get('username').invalid) {
+            <mat-error>Vous devez renseignez un identifiant</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Mot de passe </mat-label>
+            <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" />
+            <mat-icon matPrefix>lock</mat-icon>
+            <mat-icon matSuffix (click)="showPassword = !showPassword">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+            @if(loginForm.get('password').invalid) {
+            <mat-error>Vous devez renseignez un identifiant</mat-error>
+            }
+        </mat-form-field>
+
+        <button mat-fab extended type="submit" class="login-btn" id="loginBtn">
+            Se connecter
+        </button>
+    </form>
+</div>

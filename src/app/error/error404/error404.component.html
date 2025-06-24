@@ -1,0 +1,24 @@
+<div class="error-container" id="error404">
+    <div class="error-illustration">
+        <div class="error-code">404</div>
+        <div class="error-icon">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21L16.65 16.65"></path>
+                <path d="M8 11h6"></path>
+                <path d="M11 8v6"></path>
+            </svg>
+        </div>
+    </div>
+
+    <h1 class="error-title">Page non trouvée</h1>
+    <p class="error-message">
+        Oups ! Il semblerait que cette page ait été déplacée ou n'existe plus.<br>
+        Peut-être avez-vous tapé une mauvaise adresse ?
+    </p>
+
+    <div class="error-actions">
+        <button mat-fab extended (click)="goHome()"><mat-icon>home</mat-icon>Retour à l'acceuil</button>
+        <button mat-fab extended class="secondary" (click)="goBack()"><mat-icon>arrow_back_ios</mat-icon>Page précédente</button>
+    </div>
+</div>

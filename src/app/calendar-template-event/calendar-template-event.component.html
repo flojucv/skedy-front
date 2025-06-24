@@ -1,0 +1,6 @@
+<div [title]="this.getTitle()">
+    @if((this.arg.view.type != 'listWeek' && this.arg.view.type != 'listWeekCustom') && !event.allDay && isSingleDayEvent()) {
+        <mat-icon [style.color]="(this.getIcon()) ? 'white' : event.backgroundColor">{{icon}}</mat-icon>
+    }
+    <span [style.color]="(this.arg.view.type == 'timeGridWeek' || this.arg.view.type == 'timeGridDay') ? updateTextColor() : ''">{{this.getTitle()}}</span>
+</div>

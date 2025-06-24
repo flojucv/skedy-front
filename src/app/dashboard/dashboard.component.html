@@ -1,0 +1,214 @@
+<div class="container">
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">Skedy</div>
+        <mat-icon [matMenuTriggerFor]="menu">settings</mat-icon>
+        <mat-menu #menu="matMenu">
+            @if(isAdmin()) {
+            <button mat-menu-item [routerLink]="['/']"
+                routerLinkActive="router-link-active"><mat-icon>home</mat-icon>Menu</button>
+            }
+            <button mat-menu-item [routerLink]="['/logout']"
+                routerLinkActive="router-link-active"><mat-icon>logout</mat-icon>Déconnection</button>
+        </mat-menu>
+    </header>
+
+    <div class="box">
+        <mat-tab-group>
+            <mat-tab label="Utilisateurs">
+                <div class="table-header">
+                    <mat-form-field>
+                        <mat-label>Recherche un compte</mat-label>
+                        <input matInput (keyup)="applyUsersFilter($event)" #input>
+                    </mat-form-field>
+                    <button mat-fab extended (click)="addUser()"><mat-icon>person_add</mat-icon>Ajouter un
+                        utilisateur</button>
+                </div>
+
+                <mat-table [dataSource]="displayUsers" class="mat-elevation-z8">
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                        <mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="username">
+                        <mat-header-cell *matHeaderCellDef>Nom d'utilisateur</mat-header-cell>
+                        <mat-cell *matCellDef="let user">
+                            @if(user.id === userEditable) {
+                            <mat-form-field>
+                                <mat-label>Nom d'utilisateur</mat-label>
+                                <input matInput [(ngModel)]="user.username" required />
+                            </mat-form-field>
+                            } @else {
+                            {{ user.username }}
+                            }
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="role">
+                        <mat-header-cell *matHeaderCellDef>Rôle</mat-header-cell>
+                        <mat-cell *matCellDef="let user">
+                            @if(user.id === userEditable) {
+                            <mat-form-field>
+                                <mat-label>Rôle</mat-label>
+                                <mat-select [(ngModel)]="user.role_id" required>
+                                    @for(role of roles; track $index) {
+                                    <mat-option [value]="role.id">{{role.label}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                            } @else {
+                            {{ user.role_label }}
+                            }
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="group">
+                        <mat-header-cell *matHeaderCellDef>Groupe</mat-header-cell>
+                        <mat-cell *matCellDef="let user">
+                            @if(user.id === userEditable) {
+                            <mat-form-field>
+                                <mat-label>Groupes</mat-label>
+                                <mat-chip-grid #chipGrid>
+                                    @for(group of user.groups; track $index) {
+                                    <mat-chip-row (removed)="removeUserGroup(group, user)">
+                                        {{ group.label || 'Non défini' }}
+                                        <button matChipRemove>
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip-row>
+                                    }
+                                </mat-chip-grid>
+
+                                <input placeholder="Recherche un group" #groupInput [matChipInputFor]="chipGrid"
+                                    [matAutocomplete]="auto" />
+
+                                <mat-autocomplete #auto="matAutocomplete"
+                                    (optionSelected)="addUserGroup($event, user, groupInput)">
+                                    @for (group of chipsGroupsDisplay; track group) {
+                                    <mat-option [value]="group">{{group.label}}</mat-option>
+                                    }
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            } @else {
+                            <mat-chip-set>
+                                @for(group of user.groups; track $index) {
+                                <mat-chip>{{group.label || 'Non défini'}}</mat-chip>
+                                }
+                            </mat-chip-set>
+                            }
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                        <mat-cell *matCellDef="let user">
+                            <div class="actions">
+                                @if(user.id === userEditable) {
+                                <button mat-icon-button (click)="saveEditUser(user)"><mat-icon>save</mat-icon></button>
+                                <button mat-icon-button (click)="cancelEditUser(user)"
+                                    class="cancel"><mat-icon>cancel</mat-icon></button>
+                                } @else {
+                                <button mat-icon-button (click)="editUser(user)"><mat-icon>edit</mat-icon></button>
+                                <button mat-icon-button (click)="deleteUser(user)"><mat-icon>delete</mat-icon></button>
+                                }
+
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedUsersColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedUsersColumns;"></mat-row>
+                </mat-table>
+            </mat-tab>
+            <mat-tab label="Role">
+                <div class="table-header">
+                    <mat-form-field>
+                        <mat-label>Recherche un role</mat-label>
+                        <input matInput (keyup)="applyRoleFilter($event)" #input>
+                    </mat-form-field>
+                    <button mat-fab extended (click)="addRole()"><mat-icon>add_circle</mat-icon>Ajouter un rôle</button>
+                </div>
+                <mat-table [dataSource]="this.displayRoles" class="mat-elevation-z8">
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                        <mat-cell *matCellDef="let role">{{ role.id }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef>Label</mat-header-cell>
+                        <mat-cell *matCellDef="let role">{{ role.label }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="permissions">
+                        <mat-header-cell *matHeaderCellDef>Permissions</mat-header-cell>
+                        <mat-cell *matCellDef="let role">
+                            <div class="permissions">
+                                <mat-chip-set>
+                                    @for(permission of role.permission; track $index) {
+                                    <mat-chip>{{permission}}</mat-chip>
+                                    }
+                                </mat-chip-set>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                        <mat-cell *matCellDef="let role">
+                            <div class="actions">
+                                <button mat-icon-button (click)="deleteRole(role)"><mat-icon>delete</mat-icon></button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedRolesColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedRolesColumns;"></mat-row>
+
+                </mat-table>
+            </mat-tab>
+            <mat-tab label="Groupe">
+                <div class="table-header">
+                    <mat-form-field>
+                        <mat-label>Recherche un groupe</mat-label>
+                        <input matInput (keyup)="applyGroupsFilter($event)" #input>
+                    </mat-form-field>
+                    <button mat-fab extended (click)="addGroup()"><mat-icon>group_add</mat-icon>Ajouter un group</button>
+                </div>
+                <mat-table [dataSource]="this.displayGroups" class="mat-elevation-z8">
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                        <mat-cell *matCellDef="let group">{{ group.id }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef>Label</mat-header-cell>
+                        <mat-cell *matCellDef="let group">{{ group.label }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="color">
+                        <mat-header-cell *matHeaderCellDef>Couleur</mat-header-cell>
+                        <mat-cell *matCellDef="let group">
+                            <div class="color-circle" [style.backgroundColor]="group.color"></div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                        <mat-cell *matCellDef="let group">
+                            <div class="actions">
+                                <button mat-icon-button (click)="deleteGroup(group)"><mat-icon>delete</mat-icon></button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedGroupsColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedGroupsColumns;"></mat-row>
+
+                </mat-table>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</div>

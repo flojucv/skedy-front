@@ -1,0 +1,19 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <h2 mat-dialog-title>Ajouter un groupe</h2>
+    <mat-form-field>
+        <mat-label>Nom du groupe</mat-label>
+        <input matInput formControlName="label" required />
+        @if(formGroup.get('label')?.invalid) {
+        <mat-error>Le nom est requis.</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="middle">
+        <mat-label for="color">Couleur de l'utlisateur</mat-label>
+        <input matInput name="color" id="color" [(ngModel)]="color" formControlName="color">
+        <ngx-colors matSuffix ngx-colors-trigger [(ngModel)]="color" [ngModelOptions]="{standalone: true}"></ngx-colors>
+    </mat-form-field>
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onClose()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">Ajouter</button>
+    </div>
+</form>

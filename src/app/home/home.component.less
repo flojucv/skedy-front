@@ -1,0 +1,357 @@
+/* Variables pour breakpoints */
+@mobile-max: 575px;
+@tablet-min: 576px;
+@tablet-max: 767px;
+@desktop-min: 768px;
+@large-desktop-min: 1024px;
+
+/* Container principal */
+.container {
+  padding: 20px;
+  max-width: 100vw;
+  overflow-x: hidden;
+
+  @media (max-width: @mobile-max) {
+    padding: 10px 5px;
+  }
+
+  @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+    padding: 15px 10px;
+  }
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    
+    @media (max-width: @mobile-max) {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+/* Calendrier */
+.calendar {
+  padding: 20px;
+  border-radius: 25px;
+  background-color: white;
+  height: 80vh;
+  margin-top: 10%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: scroll;
+  box-sizing: border-box;
+
+  @media (max-width: @mobile-max) {
+    padding: 10px 5px;
+    border-radius: 15px;
+    height: 70vh;
+    margin-top: 5%;
+  }
+
+  @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+    padding: 15px 10px;
+    height: 75vh;
+    margin-top: 7%;
+  }
+}
+
+.calendar-container {
+  width: 100%;
+  
+  /* Styles globaux pour FullCalendar */
+  ::ng-deep {
+    .fc {
+      font-family: inherit;
+    }
+
+    /* Toolbar responsive */
+    .fc-toolbar {
+      margin-bottom: 1rem;
+      
+      @media (max-width: @mobile-max) {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 0.5rem;
+
+        .fc-toolbar-chunk {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 5px;
+        }
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .fc-toolbar-chunk {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+
+    /* Titre du calendrier */
+    .fc-toolbar-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      
+      @media (max-width: @mobile-max) {
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Boutons du calendrier */
+    .fc-button {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+
+      @media (max-width: @mobile-max) {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.5rem;
+        margin: 2px;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+      }
+    }
+
+    .fc-button-primary {
+      background-color: #667eea;
+      border-color: #667eea;
+
+      &:hover:not(:disabled) {
+        background-color: #5a6fd8;
+        border-color: #5a6fd8;
+      }
+    }
+
+    /* En-têtes de colonnes */
+    .fc-col-header {
+      background-color: #f8f9fa;
+      
+      .fc-col-header-cell {
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 8px 4px;
+        
+        @media (max-width: @mobile-max) {
+          font-size: 0.7rem;
+          padding: 4px 2px;
+        }
+
+        @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+          font-size: 0.8rem;
+          padding: 6px 3px;
+        }
+      }
+    }
+
+    /* Cellules du calendrier */
+    .fc-daygrid-day {
+      @media (max-width: @mobile-max) {
+        min-height: 40px;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        min-height: 50px;
+      }
+    }
+
+    .fc-daygrid-day-number {
+      font-size: 0.9rem;
+      padding: 4px;
+      
+      @media (max-width: @mobile-max) {
+        font-size: 0.7rem;
+        padding: 2px;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        font-size: 0.8rem;
+        padding: 3px;
+      }
+    }
+
+    /* Événements dans le calendrier */
+    .fc-daygrid-event {
+      font-size: 0.8rem;
+      border-radius: 4px;
+      margin: 1px 0;
+      
+      @media (max-width: @mobile-max) {
+        font-size: 0.6rem;
+        padding: 1px 3px;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        font-size: 0.7rem;
+        padding: 1px 4px;
+      }
+    }
+
+    /* Vue liste */
+    .fc-list-event {
+      font-size: 0.9rem;
+      
+      @media (max-width: @mobile-max) {
+        font-size: 0.8rem;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        font-size: 0.85rem;
+      }
+    }
+
+    .fc-list-day-cushion {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+
+    /* Vue semaine/jour */
+    .fc-timegrid-slot {
+      height: 30px;
+      
+      @media (max-width: @mobile-max) {
+        height: 25px;
+      }
+
+      @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+        height: 28px;
+      }
+    }
+
+    .fc-timegrid-slot-label {
+      font-size: 0.8rem;
+      
+      @media (max-width: @mobile-max) {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Numéros de semaine */
+    .fc-daygrid-week-number {
+      font-size: 0.8rem;
+      background-color: #e9ecef;
+      
+      @media (max-width: @mobile-max) {
+        font-size: 0.7rem;
+        padding: 2px;
+      }
+    }
+
+    /* Popup/tooltip */
+    .fc-popover {
+      @media (max-width: @mobile-max) {
+        width: 90vw !important;
+        max-width: none !important;
+      }
+    }
+
+    /* Scrollbars pour mobile */
+    @media (max-width: @mobile-max) {
+      .fc-scroller {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  }
+}
+
+/* Bouton d'ajout de cours */
+.add-course-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  @media (max-width: @mobile-max) {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  @media (min-width: @tablet-min) and (max-width: @tablet-max) {
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    font-size: 1.3rem;
+  }
+
+  &:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Spinner de chargement */
+.mat-spinner {
+  margin: 0 auto;
+  margin-top: 20%;
+  
+  @media (max-width: @mobile-max) {
+    margin-top: 30%;
+  }
+}
+
+/* Animations et transitions */
+.calendar-container {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Amélioration de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
