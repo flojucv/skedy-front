@@ -71,6 +71,8 @@ Et voilà, vous venez de changer le compte par default administrateur !
 
 Le project se trouve sous licence MIT
 
+> Pour tout problème rencontrez, vous pouvez [créer une issues via cette page](https://github.com/flojucv/skedy-front/issues)
+
 ---
 
 © 2025 Skedy. Tous droits réservés.
