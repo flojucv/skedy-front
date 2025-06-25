@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +23,7 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.less'
 })
 export class LoginComponent {
-
+  title = 'Skedy・Connexion';
   public loginForm: any;
   public showPassword: boolean = false;
   public error: any = {
@@ -36,12 +37,17 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     })
+  }
+
+  ngOnInit(): void {
+    this.titleService.setTitle(this.title);
   }
 
   onSubmit(): void {

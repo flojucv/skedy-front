@@ -3,7 +3,6 @@ import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectorRef, ComponentFa
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink } from '@angular/router';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core/index.js';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -18,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddEditEventComponent } from '../Modal/add-edit-event/add-edit-event.component';
 import { CalendarTemplateEventComponent } from '../calendar-template-event/calendar-template-event.component';
 import { title } from 'process';
+import { Title } from '@angular/platform-browser';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-home',
@@ -26,15 +27,15 @@ import { title } from 'process';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    RouterLink,
     FullCalendarModule,
-    MatProgressSpinnerModule
-  ],
+    MatProgressSpinnerModule,
+    HeaderComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
+  title = 'Skedy・Calendrier';
   isAdminValue: boolean = false;
   isWritePermission: boolean = false;
   isLoading: boolean = true;
@@ -113,9 +114,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     private injector: Injector,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(this.title);
     this.AuthService.hasPermission("admin").subscribe({
       next: (hasPermission: any) => {
         this.isAdminValue = hasPermission;

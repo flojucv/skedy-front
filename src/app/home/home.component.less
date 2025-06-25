@@ -20,22 +20,7 @@
   }
 }
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    
-    @media (max-width: @mobile-max) {
-      font-size: 1.2rem;
-    }
-  }
-}
+
 
 /* Calendrier */
 .calendar {
@@ -45,7 +30,7 @@
   height: 80vh;
   margin-top: 10%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
 
   @media (max-width: @mobile-max) {

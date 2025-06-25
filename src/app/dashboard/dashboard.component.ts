@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
-import { RouterLink } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSortModule } from '@angular/material/sort';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddUserComponent } from '../Modal/add-user/add-user.component';
@@ -21,6 +19,8 @@ import { AddRoleComponent } from '../Modal/add-role/add-role.component';
 import { ConfirmDeleteRoleComponent } from '../Modal/confirm-delete-role/confirm-delete-role.component';
 import { AddGroupeComponent } from '../Modal/add-groupe/add-groupe.component';
 import { ConfirmDeleteGroupComponent } from '../Modal/confirm-delete-group/confirm-delete-group.component';
+import { Title } from '@angular/platform-browser';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +28,6 @@ import { ConfirmDeleteGroupComponent } from '../Modal/confirm-delete-group/confi
   imports: [
     MatMenuModule,
     MatIconModule,
-    RouterLink,
     MatTabsModule,
     MatTableModule,
     MatChipsModule,
@@ -38,12 +37,14 @@ import { ConfirmDeleteGroupComponent } from '../Modal/confirm-delete-group/confi
     FormsModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule,
+    HeaderComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.less'
 })
 export class DashboardComponent {
+  title = 'Skedy・Dashboard';
   isAdminValue: boolean = false;
 
   public users: any[] = [];
@@ -63,11 +64,13 @@ export class DashboardComponent {
   constructor(
     private AuthService: AuthService,
     private api: ApiService,
-    private modal: MatDialog
+    private modal: MatDialog,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
     this.init();
+    this.titleService.setTitle(this.title);
   }
 
   init() {
