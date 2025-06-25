@@ -46,18 +46,18 @@ Une fois le project installer pensez a change les fichiers environnements avec l
 ## 🥇 Premier lancement
 Lors de votre premier lancement, vous pourrez vous connectez a l'application via un compte administrateur par default
 
-Username: admin
-password: admin
+Username: test
+password: test
 
 > Il vous est fortement conseillez de changer ce compte admin une fois connectez, pour se faire vous pouvez utilisez la marche a suivre suivant
 
 1. Rendez-vous dans l'onglet DashBoard
 2. Cliquez sur le bouton Ajoutez un utilisateur
 3. Entrez les informations du compte (username, password) et ajoutez lui le compte admin
-4. Déconnectez-vous du compte admin actuel
+4. Déconnectez-vous du compte test
 5. Connectez-vous via le nouveau compte admin que vous venez de créez
 6. Rendez-vous dans l'onglet DashBoard
-7. Cliquez sur la poubelle au bout de la ligne du compte admin
+7. Cliquez sur la poubelle au bout de la ligne du compte test
 8. Validez la suppression en cliquant sur le boutton supprimer
 
 Et voilà, vous venez de changer le compte par default administrateur !
@@ -70,6 +70,8 @@ Et voilà, vous venez de changer le compte par default administrateur !
 ## 🤝 Licence
 
 Le project se trouve sous licence MIT
+
+> Pour tout problème rencontrez, vous pouvez [créer une issues via cette page](https://github.com/flojucv/skedy-front/issues)
 
 ---
 
