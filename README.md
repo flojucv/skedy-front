@@ -1,27 +1,57 @@
-# Skedy
+# 📅 Skedy
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
+> Un calendrier moderne et flexible pour organiser vos planning de cours efficacement.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<p align="left">
+    <img src="https://img.shields.io/badge/Calendrier-Scolaire-blue?style=flat-square" alt="Calendrier">
+    <img src="https://img.shields.io/badge/Angular-18-DD0031?logo=angular&logoColor=white&style=flat-square" alt="Angular 18">
+    <img src="https://img.shields.io/badge/NPM-10.8.2-339933?logo=NPM&logoColor=white&style=flat-square" alt="Node.js 18">
+    <img src="https://img.shields.io/badge/Node.js-v20.17.0-339933?logo=node.js&logoColor=white&style=flat-square" alt="Node.js 20">
+</p>
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🚀 Fonctionnalités
 
-## Build
+- Gestion intuitive des événements
+- Vue calendrier mensuelle/hebdomadaire/journalière
+- Synchronisation multi-appareils
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🛠️ Installation
+Clonez le project dans l'un de vos repertoire
+```bash
+git clone https://github.com/flojucv/skedy-front.git
+```
+> ⚠︎ Vous aurez besoin de [skedy-back](https://github.com/flojucv/skedy-back.git) pour le bon fonctionnement du site.
 
-## Running unit tests
+Une fois le project installer pensez a change les fichiers environnements avec l'url de votre back ([skedy-back](https://github.com/flojucv/skedy-back.git)) pour le bon fonctionnement du site.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+### 
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 💡 Utilisation en mode développement
 
-## Further help
+1. Lancez l’application en mode développement avec `npm run start`.
+2. Accédez à l’interface sur `http://localhost:4200`.
+3. Ajoutez vos événements pour tester les fonctionnalités.
+4. Profitez d’une organisation optimale pendant le développement !
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## ⚙️ Utilisation en mode production
+1. Effectuez le build de l'application avec `npm run build`
+2. Les fichiers du site se situe maintenant dans le dossier dist
+3. Installer votre site sur un serveur apache ou nginx
+
+## 📦 Stack technique
+
+- Angular version 18
+- Node.js version 20.17.0
+
+## 🤝 Licence
+
+Le project se trouve sous licence MIT
+
+---
+
+© 2025 Skedy. Tous droits réservés.
