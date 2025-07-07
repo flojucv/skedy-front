@@ -1,0 +1,13 @@
+<div id="notifications">
+    @for (notification of notifications; track $index) {
+        <div class="notification" [ngClass]="{'errorNotif': notification.type == 'Error', 'warningNotif': notification.type == 'Warning', 'infoNotif': notification.type == 'Info', 'successNotif': notification.type == 'Success'}">
+            <mat-icon class="icon">@if(notification.type== 'Error'){warning} 
+                @else if(notification.type== 'Success') {check_circle}
+            @else {info}</mat-icon>
+            <span class="text">{{ notification.message }}</span>
+            <button class="notifBtnClose" mat-icon-button (click)="removeMessage(notification.id)" color="accent">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    }
+</div>

@@ -139,4 +139,8 @@ export class ApiService {
       headers: this.header_v2
     });
   }
+
+  getPublicHolidays(year: number) {
+    return this.http.get<any>(`https://calendrier.api.gouv.fr/jours-feries/metropole/${year}.json`);
+  }
 }

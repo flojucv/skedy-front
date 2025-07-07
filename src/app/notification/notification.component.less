@@ -1,0 +1,394 @@
+// notification.component.less
+
+// Variables
+@notification-width: 400px;
+@notification-border-radius: 15px;
+@notification-padding: 20px;
+@notification-gap: 15px;
+@notification-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+@notification-transition: all 0.3s ease;
+
+// Couleurs
+@success-color: #27ae60;
+@success-light: #2ecc71;
+@success-bg-start: #d4edda;
+@success-bg-end: #c3e6cb;
+
+@error-color: #e74c3c;
+@error-light: #c0392b;
+@error-bg-start: #f8d7da;
+@error-bg-end: #f5c6cb;
+
+@warning-color: #f39c12;
+@warning-light: #e67e22;
+@warning-bg-start: #fff3cd;
+@warning-bg-end: #ffeaa7;
+
+@info-color: #3498db;
+@info-light: #2980b9;
+@info-bg-start: #d1ecf1;
+@info-bg-end: #bee5eb;
+
+@text-primary: #2c3e50;
+@text-secondary: #7f8c8d;
+@text-light: #95a5a6;
+
+// Mixins
+.notification-gradient(@start, @end) {
+  background: linear-gradient(135deg, @start 0%, @end 100%);
+}
+
+.icon-gradient(@start, @end) {
+  background: linear-gradient(135deg, @start, @end);
+}
+
+.animation-slide-in() {
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+.animation-shine() {
+  animation: shine 2s infinite;
+}
+
+// Styles principaux
+#notifications {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: @notification-width;
+  pointer-events: none;
+
+  .notification {
+    pointer-events: auto;
+    background: white;
+    border-radius: @notification-border-radius;
+    padding: @notification-padding;
+    box-shadow: @notification-shadow;
+    display: flex;
+    align-items: center;
+    gap: @notification-gap;
+    border-left: 5px solid;
+    position: relative;
+    overflow: hidden;
+    min-height: 80px;
+    transform: translateX(450px);
+    opacity: 0;
+    transition: @notification-transition;
+    .animation-slide-in();
+
+    // Effet de brillance
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 49%, rgba(255, 255, 255, 0.1) 50%, transparent 51%);
+      .animation-shine();
+    }
+
+    // Icône
+    .icon {
+      font-size: 24px !important;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: white;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    // Texte
+    .text {
+      flex: 1;
+      font-size: 14px;
+      color: @text-secondary;
+      line-height: 1.4;
+      z-index: 1;
+    }
+
+    // Bouton de fermeture
+    .notifBtnClose {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 25px !important;
+      height: 25px !important;
+      min-width: 25px !important;
+      background: none !important;
+      color: @text-light;
+      transition: @notification-transition;
+      border: none;
+      cursor: pointer;
+      z-index: 1;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1) !important;
+        color: @text-primary;
+      }
+
+      mat-icon {
+        font-size: 16px !important;
+        width: 16px !important;
+        height: 16px !important;
+      }
+    }
+
+    // Styles par type
+    &.successNotif {
+      border-left-color: @success-color;
+      .notification-gradient(@success-bg-start, @success-bg-end);
+
+      .icon {
+        .icon-gradient(@success-color, @success-light);
+      }
+    }
+
+    &.errorNotif {
+      border-left-color: @error-color;
+      .notification-gradient(@error-bg-start, @error-bg-end);
+
+      .icon {
+        .icon-gradient(@error-color, @error-light);
+      }
+    }
+
+    &.warningNotif {
+      border-left-color: @warning-color;
+      .notification-gradient(@warning-bg-start, @warning-bg-end);
+
+      .icon {
+        .icon-gradient(@warning-color, @warning-light);
+      }
+    }
+
+    &.infoNotif {
+      border-left-color: @info-color;
+      .notification-gradient(@info-bg-start, @info-bg-end);
+
+      .icon {
+        .icon-gradient(@info-color, @info-light);
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes slideIn {
+  from {
+    transform: translateX(450px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(450px);
+    opacity: 0;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  #notifications {
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    top: 10px;
+    
+    .notification {
+      padding: 15px;
+      min-height: 70px;
+      transform: translateY(-100px);
+      
+      .icon {
+        width: 35px;
+        height: 35px;
+        font-size: 20px !important;
+      }
+      
+      .text {
+        font-size: 13px;
+      }
+      
+      .notifBtnClose {
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        top: 8px;
+        right: 8px;
+        
+        mat-icon {
+          font-size: 14px !important;
+          width: 14px !important;
+          height: 14px !important;
+        }
+      }
+    }
+  }
+  
+  // Animation mobile
+  @keyframes slideIn {
+    from {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+  }
+}
+
+// Amélioration de l'accessibilité
+.notification {
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3), @notification-shadow;
+  }
+}
+
+// Animation de suppression
+.notification.removing {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+// Styles pour les textes longs
+.notification .text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: calc(100% - 80px); // Espace pour l'icône et le bouton
+}
+
+// Hover effects
+.notification:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  
+  .notifBtnClose {
+    opacity: 1;
+  }
+}
+
+// Focus states pour l'accessibilité
+.notifBtnClose:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+// Amélioration des icônes Material
+.notification .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  mat-icon {
+    font-size: inherit !important;
+    width: auto !important;
+    height: auto !important;
+  }
+}
+
+// Styles pour les notifications multiples
+#notifications {
+  .notification {
+    margin-bottom: 0;
+    
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    
+    // Décalage progressif pour l'effet de profondeur
+    &:nth-child(1) { z-index: 100; }
+    &:nth-child(2) { z-index: 99; }
+    &:nth-child(3) { z-index: 98; }
+    &:nth-child(4) { z-index: 97; }
+    &:nth-child(5) { z-index: 96; }
+  }
+}
+
+// Styles additionnels pour améliorer l'intégration Material
+.mat-snack-bar-container {
+  &.snackBar {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    
+    .mat-snack-bar-content {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+  }
+}
+
+// Amélioration des transitions
+.notification {
+  transition: 
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+// Effet de pulsation pour les notifications importantes
+.notification.errorNotif {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: @notification-border-radius;
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+  }
+}

@@ -16,9 +16,9 @@ import { ApiService } from '../services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditEventComponent } from '../Modal/add-edit-event/add-edit-event.component';
 import { CalendarTemplateEventComponent } from '../calendar-template-event/calendar-template-event.component';
-import { title } from 'process';
 import { Title } from '@angular/platform-browser';
 import { HeaderComponent } from "../header/header.component";
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +30,7 @@ import { HeaderComponent } from "../header/header.component";
     FullCalendarModule,
     MatProgressSpinnerModule,
     HeaderComponent
-],
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
 })
@@ -75,6 +75,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           year: 'numeric',
         },
       },
+      timeGridWeek: {
+        allDaySlot: true,
+        dayMaxEvents: false,
+        eventMaxStack: 3
+      },
+      timeGridDay: {
+        allDaySlot: true,
+        dayMaxEvents: false
+      }
     },
     eventContent: this.renderEventContent.bind(this),
     multiMonthMaxColumns: 2,
@@ -114,7 +123,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     private injector: Injector,
-    private titleService: Title
+    private titleService: Title,
+    private notification: NotificationsService
   ) { }
 
   ngOnInit(): void {
@@ -167,7 +177,24 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (this.calendarComponent) {
           console.log('Loading calendar events:', res);
           this.calendarComponent.getApi().removeAllEvents();
-          this.calendarComponent.getApi().addEventSource(res.data);
+          this.calendarComponent.getApi().addEventSource(this.processEvents(res.data));
+          console.log(this.calendarComponent.getApi().getEvents())
+
+          this.api.getPublicHolidays(new Date(start).getFullYear()).subscribe({
+            next: (holidays: any) => {
+              Object.keys(holidays).forEach((key: any) => {
+                this.calendarComponent.getApi().addEvent({
+                  title: holidays[key],
+                  start: key,
+                  allDay: true,
+                  classNames: ['holiday-event'],
+                  extendedProps: {
+                    group_id: 'holidays'
+                  }
+                });
+              });
+            }
+          })
         }
       },
       error: (err: any) => {
@@ -181,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public editEvent(data: any): void {
-    if( !this.isWritePermission && !this.isAdminValue) {
+    if (!this.isWritePermission && !this.isAdminValue) {
       console.warn('User does not have permission to edit events.');
       return;
     }
@@ -208,6 +235,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const endDate = view.activeEnd.toISOString();
 
         this.loadCalendarEvents(startDate, endDate);
+        this.notification.pushNotification('Événement modifié avec succès', 'Success');
       }
     });
   }
@@ -240,6 +268,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const endDate = view.activeEnd.toISOString();
 
         this.loadCalendarEvents(startDate, endDate);
+        this.notification.pushNotification('Événement ajouté avec succès', 'Success');
       }
     });
   }
@@ -265,6 +294,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const endDate = view.activeEnd.toISOString();
 
         this.loadCalendarEvents(startDate, endDate);
+        this.notification.pushNotification('Événement ajouté avec succès', 'Success');
       }
     });
   }
@@ -379,5 +409,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     component.instance.arg = arg;
     component.changeDetectorRef.detectChanges();
     return { domNodes: [component.location.nativeElement] };
+  }
+
+  // Fonction pour traiter les événements
+  private processEvents(events: any[]) {
+    return events.map(event => {
+      const processedEvent = { ...event };
+
+      // Vérifier si start et end existent
+      if (event.start && event.end) {
+        const startDate = new Date(event.start);
+        const endDate = new Date(event.end);
+
+        console.log(`${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}` != `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}`)
+
+        processedEvent.allDay = false;
+
+        if (`${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}` != `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}`) {
+          processedEvent.allDay = true;
+        }
+      }
+
+      console.log('Processed Event:', processedEvent);
+      return processedEvent;
+    });
   }
 }

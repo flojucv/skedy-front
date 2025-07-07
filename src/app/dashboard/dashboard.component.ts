@@ -1,3 +1,4 @@
+import { notification } from './../models/notification.d';
 import { MatMenuModule } from '@angular/material/menu';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +22,7 @@ import { AddGroupeComponent } from '../Modal/add-groupe/add-groupe.component';
 import { ConfirmDeleteGroupComponent } from '../Modal/confirm-delete-group/confirm-delete-group.component';
 import { Title } from '@angular/platform-browser';
 import { HeaderComponent } from '../header/header.component';
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -65,7 +67,8 @@ export class DashboardComponent {
     private AuthService: AuthService,
     private api: ApiService,
     private modal: MatDialog,
-    private titleService: Title
+    private titleService: Title,
+    private notification: NotificationsService
   ) { }
 
   ngOnInit(): void {
@@ -201,6 +204,7 @@ export class DashboardComponent {
             next: (res: any) => {
               this.users = res.data;
               this.displayUsers = this.users;
+              this.notification.pushNotification('Utilisateur ajouté avec succès', 'Success');
             },
             error: (error: any) => {
               console.error('Error fetching users:', error);
@@ -226,6 +230,7 @@ export class DashboardComponent {
             next: (res: any) => {
               this.roles = res.data;
               this.displayRoles = this.roles;
+              this.notification.pushNotification('Rôle ajouté avec succès', 'Success');
             },
             error: (error: any) => {
               console.error('Error fetching roles:', error);
@@ -253,6 +258,7 @@ export class DashboardComponent {
       next: (result: any) => {
         if (result) {
           this.init();
+          this.notification.pushNotification('Rôle supprimé avec succès', 'Success');
         }
       },
       error: (error: any) => {
@@ -273,6 +279,7 @@ export class DashboardComponent {
       next: (result: any) => {
         if (result) {
           this.init();
+          this.notification.pushNotification('Utilisateur supprimé avec succès', 'Success');
         }
       },
       error: (error: any) => {
@@ -294,6 +301,7 @@ export class DashboardComponent {
               this.groups = res.data;
               this.displayGroups = this.groups;
               this.chipsGroupsDisplay = this.groups;
+              this.notification.pushNotification('Groupe ajouté avec succès', 'Success');
             },
             error: (error: any) => {
               console.error('Error fetching groups:', error);
@@ -326,6 +334,7 @@ export class DashboardComponent {
       next: (result: any) => {
         if (result) {
           this.init();
+          this.notification.pushNotification('Groupe supprimé avec succès', 'Success');
         }
       },
       error: (error: any) => {
