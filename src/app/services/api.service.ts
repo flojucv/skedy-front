@@ -143,4 +143,11 @@ export class ApiService {
   getPublicHolidays(year: number) {
     return this.http.get<any>(`https://calendrier.api.gouv.fr/jours-feries/metropole/${year}.json`);
   }
+
+  deleteCalendar(eventId:string) {
+    this.initializeHeader_v2();
+    return this.http.delete<any>(`${environment.API_URL}/calendar/event/${eventId}`, {
+      headers: this.header_v2
+    })
+  }
 }

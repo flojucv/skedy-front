@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ApiService } from '../../services/api.service';
 import { MatSelectModule } from '@angular/material/select';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-add-edit-event',
@@ -58,7 +59,8 @@ export class AddEditEventComponent {
     private dialogRef: MatDialogRef<AddEditEventComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private api: ApiService
+    private api: ApiService,
+    private notifications: NotificationsService
   ) {
     this.eventForm = this.formBuilder.group({
       id: ['0'],
@@ -72,7 +74,6 @@ export class AddEditEventComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.data.event)
     if (!this.data.event) {
       this.mode = 'add';
 
@@ -181,6 +182,17 @@ export class AddEditEventComponent {
       error: (err: any) => {
         console.error(err);
         this.error = 'Une erreur est survenue lors de la modification de l\'événement';
+      }
+    })
+  }
+
+  onDelete() {
+    this.api.deleteCalendar(this.eventForm.value.id).subscribe({
+      next: (res:any) => {
+        if(!res.error) {
+          this.notifications.pushNotification("Evenement supprimer avec success", "Success");
+          this.dialogRef.close({ reload: true });
+        }
       }
     })
   }
