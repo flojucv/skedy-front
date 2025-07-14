@@ -16,8 +16,8 @@
 
                 <mat-table [dataSource]="displayUsers" class="mat-elevation-z8">
                     <ng-container matColumnDef="id">
-                        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-                        <mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
+                        <mat-header-cell *matHeaderCellDef class="row_id header_row">ID</mat-header-cell>
+                        <mat-cell *matCellDef="let user" class="row_id">{{ user.id }}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="username">
@@ -35,8 +35,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="role">
-                        <mat-header-cell *matHeaderCellDef>Rôle</mat-header-cell>
-                        <mat-cell *matCellDef="let user">
+                        <mat-header-cell *matHeaderCellDef class="row_id">Rôle</mat-header-cell>
+                        <mat-cell *matCellDef="let user" class="row_id">
                             @if(user.id === userEditable) {
                             <mat-form-field>
                                 <mat-label>Rôle</mat-label>
@@ -100,7 +100,7 @@
                                     class="cancel"><mat-icon>cancel</mat-icon></button>
                                 } @else {
                                 <button mat-icon-button (click)="editUser(user)"><mat-icon>edit</mat-icon></button>
-                                <button mat-icon-button (click)="deleteUser(user)"><mat-icon>delete</mat-icon></button>
+                                <button mat-icon-button (click)="deleteUser(user)" class="delete-btn"><mat-icon>delete</mat-icon></button>
                                 }
 
                             </div>

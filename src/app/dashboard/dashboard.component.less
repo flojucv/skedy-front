@@ -1,3 +1,10 @@
+/* Variables pour breakpoints */
+@mobile-max: 575px;
+@tablet-min: 576px;
+@tablet-max: 767px;
+@desktop-min: 768px;
+@large-desktop-min: 1024px;
+
 .table-header {
     margin-top: 10px;
     width: 100%;
@@ -24,4 +31,28 @@
     border-radius: 50%;
     display: inline-block;
     border: 1px solid #ccc;
+}
+
+mat-table {
+    max-height: 50vh;
+    overflow: auto;
+}
+
+@media (max-width: @mobile-max) {
+    .container {
+        width: 45vh;
+        padding: 0;
+    }
+
+    .box {
+        width: 100%;
+    }
+
+    .row_id {
+        display: none;
+    }
+}
+
+.delete-btn {
+    color: #ba1a1a;
 }

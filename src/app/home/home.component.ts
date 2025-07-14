@@ -19,6 +19,7 @@ import { CalendarTemplateEventComponent } from '../calendar-template-event/calen
 import { Title } from '@angular/platform-browser';
 import { HeaderComponent } from "../header/header.component";
 import { NotificationsService } from '../services/notifications.service';
+import { ExportModalComponent } from '../Modal/export-modal/export-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -432,6 +433,44 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       console.log('Processed Event:', processedEvent);
       return processedEvent;
+    });
+  }
+
+  // Ajoutez cette méthode dans votre classe HomeComponent
+  public showExportModal(): void {
+    // Récupérer tous les événements du calendrier
+    this.api.getExportEvents().subscribe({
+      next: (res: any) => {
+        if (res && res.data) {
+          console.log(res)
+          // Filtrer les événements (optionnel - exclure les jours fériés par exemple)
+          const filteredEvents = res.data.filter((event:any) =>
+            event.extendedProps?.['group_id'] !== 'holidays'
+          );
+
+          // Convertir les événements en format compatible
+          const exportEvents = filteredEvents.map((event:any) => ({
+            id: event.id,
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            allDay: event.allDay,
+            extendedProps: event.extendedProps
+          }));
+
+          // Ouvrir la modal d'export
+          const modal = this.modal.open(ExportModalComponent, {
+            width: this.getModalWidth(),
+            data: { events: exportEvents }
+          });
+
+          modal.afterClosed().subscribe((result: any) => {
+            if (result) {
+              this.notification.pushNotification('Export terminé avec succès', 'Success');
+            }
+          });
+        }
+      }
     });
   }
 }

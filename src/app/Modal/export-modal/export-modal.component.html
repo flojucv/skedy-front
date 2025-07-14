@@ -1,0 +1,62 @@
+<div class="export-modal">
+    <h2 mat-dialog-title class="export-title">
+        <mat-icon>download</mat-icon>
+        Exporter le calendrier
+    </h2>
+
+    <mat-dialog-content>
+        <div class="export-section">
+            <h3>Export de fichier</h3>
+            <p class="export-description">
+                Téléchargez vos événements dans différents formats
+            </p>
+
+            <div class="export-buttons">
+                <button mat-raised-button color="primary" (click)="exportToText()" class="export-btn">
+                    <mat-icon>description</mat-icon>
+                    Export Texte (.txt)
+                </button>
+
+                <button mat-raised-button color="primary" (click)="exportToCSV()" class="export-btn">
+                    <mat-icon>table_chart</mat-icon>
+                    Export CSV (.csv)
+                </button>
+
+                <button mat-raised-button color="primary" (click)="exportToICS()" class="export-btn">
+                    <mat-icon>event</mat-icon>
+                    Export Calendrier (.ics)
+                </button>
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="export-section">
+            <h3>Import vers calendrier externe</h3>
+            <p class="export-description">
+                Importez directement vers votre calendrier préféré
+            </p>
+
+            <div class="export-buttons">
+                <button mat-raised-button color="accent" (click)="openGoogleCalendar()" class="export-btn">
+                    <mat-icon>event</mat-icon>
+                    Google Calendar
+                </button>
+
+                <button mat-raised-button color="accent" (click)="openOutlookCalendar()" class="export-btn">
+                    <mat-icon>event</mat-icon>
+                    Outlook Calendar
+                </button>
+            </div>
+        </div>
+
+        <div class="export-info">
+            <mat-icon>info</mat-icon>
+            <span>{{data.events.length}} événement(s) sélectionné(s)</span>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="close()">Fermer</button>
+    </mat-dialog-actions>
+</div>
